@@ -126,6 +126,8 @@ func main() {
 		port = defaultPort
 	}
 	addr := fmt.Sprintf("%s:%s", host, port)
+	certPath := os.Getenv("CERTPATH")
+	keyPath := os.Getenv("KEYPATH")
 
 	zips, err := loadZipsFromCSV("zips.csv")
 
@@ -149,5 +151,5 @@ func main() {
 
 	fmt.Printf("server is listening at %s...\n", addr)
 
-	log.Fatal(http.ListenAndServe(addr, nil))
+	log.Fatal(http.ListenAndServeTLS(addr, certPath, keyPath, nil))
 }
