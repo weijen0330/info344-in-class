@@ -12,7 +12,10 @@ import (
 	"strings"
 )
 
-const defaultPort = "80"
+/* 80 for HTTP
+   443 for HTTPS, otherwise the browser needs a specific number in the URL or it
+   won't connect */
+const defaultPort = "443"
 
 const (
 	headerContentType              = "Content-Type"

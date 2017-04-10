@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Zips</title>
+</head>
+<body>
+	<p>Open your console!</p>
+	<script>
+		fetch("http://localhost:8000/zips/city/seattle")
+			.then(function(resp) {
+				return resp.json()
+			})
+			.then(function(data) {
+				console.log(data)
+
+			})
+			.catch(function(err) {
+				console.error(err)
+			})	
+	</script>
+	
+</body>
+</html>
