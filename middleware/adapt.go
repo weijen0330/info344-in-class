@@ -18,3 +18,11 @@ type Adapter func(http.Handler) http.Handler
 //reverse order, passing the `handler` to
 //each, and resetting `handler` to the
 //handler returned from the Adapter func
+//the ... means that you can pass as many Adapters as you would like.
+//and the function will treat it as a slice
+func Adapt(handler http.Handler, adapters ...Adapter) http.Handler {
+	for idx = len(adapters) - 1; idx > 0; idx-- {
+		handler = adapters[idx](handler)
+	}
+	return handler
+}

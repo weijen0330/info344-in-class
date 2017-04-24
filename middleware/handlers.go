@@ -6,7 +6,10 @@ const headerContentType = "Content-Type"
 const contentTypeText = "text/plain"
 
 //HelloHandler1 says hello from handler 1
+// Option 1 from the slides
+// Cons: Might forget to call logReq
 func HelloHandler1(w http.ResponseWriter, r *http.Request) {
+	logReq(r)
 	w.Header().Add(headerContentType, contentTypeText)
 	w.Write([]byte("Hello from Handler 1"))
 }
