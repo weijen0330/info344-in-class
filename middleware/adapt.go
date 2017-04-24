@@ -21,7 +21,7 @@ type Adapter func(http.Handler) http.Handler
 //the ... means that you can pass as many Adapters as you would like.
 //and the function will treat it as a slice
 func Adapt(handler http.Handler, adapters ...Adapter) http.Handler {
-	for idx = len(adapters) - 1; idx > 0; idx-- {
+	for idx := len(adapters) - 1; idx > 0; idx-- {
 		handler = adapters[idx](handler)
 	}
 	return handler

@@ -28,6 +28,6 @@ func logRequests(handler http.Handler) http.Handler {
 		log.Printf("%s, %s", r.Method, r.URL.Path)
 		start := time.Now()
 		handler.ServeHTTP(w, r)
-		logger.Printf("%v\n", time.Since(start))
+		log.Printf("%v\n", time.Since(start))
 	})
 }
