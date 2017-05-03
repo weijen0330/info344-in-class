@@ -28,11 +28,19 @@ func main() {
 	//its results
 	rand.Seed(time.Now().UnixNano())
 	fmt.Println("starting long-running func...")
-	// unbuffered, accept 1 int at a time
-	ch := make(chan int)
-	go someLongFunc(ch)
+	n := 10
+	ch := make(chan int, n)
+	start := time.Now()
 
+	// the go keyword makes it runs concurrently
+	// without it, it runs serially
+	for i := 0; i < n; i++ {
+		go someLongFunc(ch)
+	}
 	// read out the result
-	result := <-ch
-	fmt.Printf("result was %d\n", result)
+	for i := 0; i < n; i++ {
+		result := <-ch
+		fmt.Printf("result was %d\n", result)
+	}
+	fmt.Printf("took %v\n", time.Since(start))
 }
