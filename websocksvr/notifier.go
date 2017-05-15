@@ -6,8 +6,11 @@ import (
 
 //Notifier represents a web sockets notifier
 type Notifier struct {
-	eventq  chan interface{}
+	eventq chan interface{}
+
+	// Using a map here because it's easy to find and delete connections
 	clients map[*websocket.Conn]bool
+
 	//TODO: add other fields you might need
 	//such as another channel or a mutex
 	//(either would work)
@@ -20,7 +23,11 @@ type Notifier struct {
 func NewNotifier() *Notifier {
 	//TODO: create, initialize and return
 	//a Notifier struct
-	return nil
+	return &Notifier{
+		eventq: make(chan interface{}, 100),
+		clients: make(map[*websocket.Conn]bool),
+
+	}
 }
 
 //Start begins a loop that checks for new events
@@ -32,6 +39,9 @@ func (n *Notifier) Start() {
 	//this should check for new events written
 	//to the `eventq` channel, and broadcast
 	//them to all of the web socket clients
+	for () {
+		n.broadcast(event)
+	}
 }
 
 //AddClient adds a new web socket client to the Notifer
@@ -41,6 +51,12 @@ func (n *Notifier) AddClient(client *websocket.Conn) {
 	//an HTTP handler, and each HTTP request is
 	//processed on its own goroutine, so your
 	//implementation here MUST be safe for concurrent use
+
+	//after you add the client to the map, 
+	//call n.readPump() on its own goroutine
+	//to process all of the control messages sent 
+	//by the client to the server.
+	//see https://godoc.org/github.com/gorilla/websocket#hdr-Control_Messages 
 
 }
 

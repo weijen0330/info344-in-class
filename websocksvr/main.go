@@ -22,7 +22,7 @@ type MessageEvent struct {
 
 //TriggerEvent triggers a new MessageEvent. This is just a handy
 //way to create new events for demo purposes. In a real app, you
-//would create and broacast events in response to various handler
+//would create and broadcast events in response to various handler
 //actions, e.g., new user sign-up, post of a new message, etc.
 func (ctx *HandlerContext) TriggerEvent(w http.ResponseWriter, r *http.Request) {
 	//CORS headers to allow cross-origin requests
@@ -60,6 +60,8 @@ func main() {
 
 	//TODO: start the notifier by calling
 	//its .Start() method on a new goroutine
+
+	Notifier.Start()
 
 	http.HandleFunc("/v1/ws", ctx.WebSocketUpgradeHandler)
 	http.HandleFunc("/v1/trigger", ctx.TriggerEvent)
